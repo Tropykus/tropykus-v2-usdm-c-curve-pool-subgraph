@@ -9,11 +9,16 @@ import {
   RemoveLiquidityImbalance as RemoveLiquidityImbalanceEvent,
   RampA as RampAEvent,
   StopRampA as StopRampAEvent,
-  ApplyNewFee as ApplyNewFeeEvent
+  ApplyNewFee as ApplyNewFeeEvent,
+  CurveStableSwapNG
 } from "../generated/CurveStableSwapNG/CurveStableSwapNG"
+
+import { ERC20 } from '../generated/CurveStableSwapNG/ERC20'
+
 import {
   Transfer,
   Approval,
+  Token,
   TokenExchange,
   TokenExchangeUnderlying,
   AddLiquidity,
@@ -56,13 +61,37 @@ export function handleApproval(event: ApprovalEvent): void {
 }
 
 export function handleTokenExchange(event: TokenExchangeEvent): void {
+  let contract = CurveStableSwapNG.bind(event.address)
+  let soldTokenAddress = contract.coins(event.params.sold_id)
+  let boughtTokenAddress = contract.coins(event.params.bought_id)
+
+  let soldToken = Token.load(soldTokenAddress.toHex())
+
+  if (soldToken == null) {
+    soldToken = new Token(soldTokenAddress.toHex())
+    let soldTokenContract = ERC20.bind(soldTokenAddress)
+    soldToken.symbol = soldTokenContract.symbol()
+    soldToken.decimals = soldTokenContract.decimals()
+    soldToken.save()
+  }
+
+  let boughtToken = Token.load(boughtTokenAddress.toHex())
+
+  if (boughtToken == null) {
+    boughtToken = new Token(boughtTokenAddress.toHex())
+    let boughtTokenContract = ERC20.bind(boughtTokenAddress)
+    boughtToken.symbol = boughtTokenContract.symbol()
+    boughtToken.decimals = boughtTokenContract.decimals()
+    boughtToken.save()
+  }
+
   let entity = new TokenExchange(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.buyer = event.params.buyer
-  entity.sold_id = event.params.sold_id
+  entity.sold_token = soldToken.id
   entity.tokens_sold = event.params.tokens_sold
-  entity.bought_id = event.params.bought_id
+  entity.bought_token = boughtToken.id
   entity.tokens_bought = event.params.tokens_bought
 
   entity.blockNumber = event.block.number
