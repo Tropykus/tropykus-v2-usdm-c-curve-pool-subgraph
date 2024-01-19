@@ -89,9 +89,9 @@ export function handleTokenExchange(event: TokenExchangeEvent): void {
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.buyer = event.params.buyer
-  entity.sold_token = soldToken.id
+  entity.sold = soldToken.id
   entity.tokens_sold = event.params.tokens_sold
-  entity.bought_token = boughtToken.id
+  entity.bought = boughtToken.id
   entity.tokens_bought = event.params.tokens_bought
 
   entity.blockNumber = event.block.number

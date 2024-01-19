@@ -28,8 +28,8 @@ type TokenExchange @entity(immutable: true) {
   id: Bytes!
   buyer: Bytes! # address
   tokens_sold: BigInt! # uint256
-  sold_token: Token!
-  bought_token: Token!
+  sold: Token!
+  bought: Token!
   tokens_bought: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!

@@ -6,9 +6,9 @@ dataSources:
     name: CurveStableSwapNG
     network: matic
     source:
-      address: "0xd8001cE95A13168AA4F7D70b5298962b7cADf6Dd"
+      address: "0xcD4e41382940F46c2ba7291364b43FdA0F5C2B02"
       abi: CurveStableSwapNG
-      startBlock: 50625140
+      startBlock: 52486279
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
