@@ -2,17 +2,23 @@
   "name": "tropykus-v2-usdm-c-curve-pool",
   "license": "UNLICENSED",
   "scripts": {
-    "codegen": "graph codegen",
-    "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ tropykus-v2-usdm-c-curve-pool",
+    "build:dev": "mustache networks.development.json subgraph.template.yaml > subgraph.yaml && graph codegen && graph build",
+    "build:staging": "mustache networks.staging.json subgraph.template.yaml > subgraph.yaml && graph codegen && graph build",
+    "build:production": "mustache networks.production.json subgraph.template.yaml > subgraph.yaml && graph codegen && graph build",    
+    "deploy:development": "npm run build:dev && npm run create-local && npm run deploy-local",
+    "deploy:staging": "npm run build:staging && graph deploy --studio tropykus-v2-usdm-c-st-pool",
+    "deploy:production": "npm run build:production && graph deploy --studio tropykus-v2-usdm-c-curve-pool",
     "create-local": "graph create --node http://localhost:8020/ tropykus-v2-usdm-c-curve-pool",
     "remove-local": "graph remove --node http://localhost:8020/ tropykus-v2-usdm-c-curve-pool",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 tropykus-v2-usdm-c-curve-pool",
     "test": "graph test"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.64.0",
+    "@graphprotocol/graph-cli": "0.67.3",
     "@graphprotocol/graph-ts": "0.32.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0",
+    "mustache": "^4.2.0"
+  }
 }
