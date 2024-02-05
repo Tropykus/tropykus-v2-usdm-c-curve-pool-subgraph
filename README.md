@@ -51,16 +51,18 @@ query SwapsByUser($user: String) {
         transactionHash
         blockTimestamp
         buyer
-        sold {
-            id
-            symbol
-            decimals
+        sold_token{
+          id
+          symbol
+          decimals
         }
-        bought {
-            id
-            symbol
-            decimals
-        }
+       bought_token{
+        id
+        decimals
+        symbol
+      }
+    transactionHash
+    blockTimestamp
     }
 }
 ```

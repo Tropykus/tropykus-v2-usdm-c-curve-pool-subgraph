@@ -28,12 +28,12 @@ type TokenExchange @entity(immutable: true) {
   id: Bytes!
   buyer: Bytes! # address
   tokens_sold: BigInt! # uint256
-  sold: Token!
-  bought: Token!
   tokens_bought: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  sold_token: Token!
+  bought_token: Token!
 }
 
 type TokenExchangeUnderlying @entity(immutable: true) {
