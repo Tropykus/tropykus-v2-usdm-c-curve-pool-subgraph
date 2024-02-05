@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: CurveStableSwapNG
-    network: matic
+    network: {{network}}
     source:
       abi: CurveStableSwapNG
-      address: "0xcD4e41382940F46c2ba7291364b43FdA0F5C2B02"
-      startBlock: 52486279
+      address: "{{address}}"
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

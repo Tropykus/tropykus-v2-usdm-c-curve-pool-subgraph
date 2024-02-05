@@ -77,7 +77,18 @@ The variables should be like this:
 
 ## Updating liquidity pools
 
-In order to update the liquidity pools go to `subgraph.yaml` amd update the following lines
+In order to update the liquidity pools go check the parameters of networks.staging.json (or production.staging.json)
+
+```json
+{
+  "network": "matic",
+  "address": "0xcD4e41382940F46c2ba7291364b43FdA0F5C2B02",
+  "startBlock": 52486279
+}
+```
+Then run the command `npm run build:staging`
+
+It should update the subgraph.yaml file automatically
 
 ```yaml
 # ...
@@ -86,25 +97,19 @@ dataSources:
     name: CurveStableSwapNG
     network: matic
     source:
-      address: "0xcD4e41382940F46c2ba7291364b43FdA0F5C2B02" # Change this
+      address: "0xcD4e41382940F46c2ba7291364b43FdA0F5C2B02"
       abi: CurveStableSwapNG
-      startBlock: 52486279 # Change this
+      startBlock: 52486279
 ```      
 
 Authenticate with The Graph Studio:
-    ```bash
-    graph auth --studio <your-auth-key>
-    ```
+    `graph auth --studio <your-auth-key>`
 
 Generate the code and build the project:
-    ```bash
-    graph codegen && graph build
-    ```
+    `npm run build:staging`
 
 Deploy the project:
-    ```bash
-    graph deploy --studio tropykus-v2-usdm-c-curve-pool
-    ```
+    `npm run deploy:staging`
 
 ## Deployed pools
 
@@ -112,10 +117,14 @@ Deploy the project:
 
 The currently deployed pool is: 0xd8001cE95A13168AA4F7D70b5298962b7cADf6Dd
 
+startBlock: 50625140
+
 It can be queried from here: https://api.studio.thegraph.com/query/46125/tropykus-v2-usdm-c-curve-pool/version/latest
 
 ### Staging
 
 The currently deployed pool is: 0xcD4e41382940F46c2ba7291364b43FdA0F5C2B02
+
+startBlock: 52486279
 
 It can be queried from here: https://api.studio.thegraph.com/query/46125/tropykus-v2-usdm-c-st-pool/version/latest
