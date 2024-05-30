@@ -34,6 +34,19 @@ type TokenExchange @entity(immutable: true) {
   transactionHash: Bytes!
   sold_token: Token!
   bought_token: Token!
+  isDeposit: Boolean!
+  isWithdrawal: Boolean!
+  userActivity: UserActivity!
+}
+
+type UserActivity @entity {
+  id: ID!
+  tokenExchanges: [TokenExchange!]! @derivedFrom(field: "userActivity")
+  #Adding calculations for total withdraws and total repays
+  cleanDepositsTimestamp: Int!
+  depositsAfterCleanTimestamp: BigInt!
+  withdrawsAfterCleanTimestamp: BigInt!
+  bruteDeposits: BigInt!
 }
 
 type TokenExchangeUnderlying @entity(immutable: true) {

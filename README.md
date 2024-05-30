@@ -67,6 +67,20 @@ query SwapsByUser($user: String) {
 }
 ```
 
+To get the bruteDeposits of a user you can use:
+
+```graphql
+query UserActivity($user: String)  {
+  userActivities(where: {id: $user}) {
+    id
+    bruteDeposits
+    cleanDepositsTimestamp
+    depositsAfterCleanTimestamp
+    withdrawsAfterCleanTimestamp
+  }
+}
+```
+
 The variables should be like this:
 
 ```json
